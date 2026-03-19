@@ -30,3 +30,6 @@ Thumbs.db
 CLAUDE.md
 AGENTS.md
 .claude/
+
+# Agent Skills install artifacts (created by npx skills add)
+.agents/
