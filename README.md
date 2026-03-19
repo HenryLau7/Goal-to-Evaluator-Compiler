@@ -38,20 +38,64 @@ EvalSpec + blessed_state + candidate_state ──► Judge ──► EvalReport 
 | **Elicit** | GoalBundle (ambiguous) | Tradeoff questions → PreferenceProfile |
 | **Judge** | EvalSpec + GoalBundle (with states) | EvalReport + Decision |
 
-## Installation
+## Usage as a Claude Code Skill
 
-Requires Python 3.12+.
+The fastest way to use this project. No Python installation required.
+
+### Install
+
+Add the skill directory to your Claude Code project settings (`.claude/settings.json`):
+
+```json
+{
+  "skills": {
+    "directories": [
+      "/path/to/Goal-to-Evaluator-Compiler/skills"
+    ]
+  }
+}
+```
+
+### Invoke
+
+During any Claude Code session:
+
+```
+/goal-eval
+```
+
+Or with an inline goal:
+
+```
+/goal-eval Refactor the auth module to use JWT tokens
+```
+
+### What Happens
+
+1. **Gather** — Claude asks for your goal (or uses the one you provided)
+2. **Elicit** — If the goal is vague, Claude asks 5-6 targeted tradeoff questions to understand your preferences
+3. **Compile** — Claude builds a structured evaluation contract (success criteria, failure conditions, drift anchors, thresholds)
+4. **Evidence** — Claude reads your code, runs tests, checks git history to gather real evidence for each criterion
+5. **Judge** — Claude scores every criterion, checks for failures and drift, computes a weighted score
+6. **Verdict** — Claude emits exactly one of: `ACCEPT_AS_BLESSED`, `CONTINUE`, `ROLLBACK`, or `STOP`
+
+You can invoke `/goal-eval` at any point during iteration to get a structured checkpoint.
+
+---
+
+## Usage as a Python Library
+
+For programmatic integration into agent pipelines. Requires Python 3.12+.
+
+### Install
 
 ```bash
-# Clone the repository
-git clone <repo-url>
+git clone https://github.com/HenryLau7/Goal-to-Evaluator-Compiler.git
 cd Goal-to-Evaluator-Compiler
 
-# Create a conda environment (recommended)
 conda create -n goal-eval python=3.12 -y
 conda activate goal-eval
 
-# Install in editable mode
 pip install -e ".[dev]"
 ```
 
@@ -216,7 +260,10 @@ Exactly one of four verdicts:
 ## Project Structure
 
 ```
-core/                   # Framework-agnostic evaluation logic
+skills/                 # Claude Code skill (interactive use)
+  goal-eval.md          # /goal-eval — invoke during any session for a structured evaluation
+
+core/                   # Framework-agnostic evaluation logic (Python library)
   schemas.py            # All data contracts (GoalBundle, EvalSpec, Decision, etc.)
   compiler.py           # GoalBundle + PreferenceProfile → EvalSpec
   elicitor.py           # Ambiguity detection and preference question generation
