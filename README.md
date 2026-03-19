@@ -44,7 +44,17 @@ The fastest way to use this project. No Python installation required.
 
 ### Install
 
-Add the skill directory to your Claude Code project settings (`.claude/settings.json`):
+**Option 1: One-command install (recommended)**
+
+```bash
+npx skills add HenryLau7/Goal-to-Evaluator-Compiler
+```
+
+This follows the [Agent Skills](https://agentskills.io) open standard and automatically registers the skill with Claude Code.
+
+**Option 2: Manual install**
+
+Clone the repo and add the skill directory to your Claude Code project settings (`.claude/settings.json`):
 
 ```json
 {

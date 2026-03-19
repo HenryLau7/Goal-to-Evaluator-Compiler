@@ -1,6 +1,10 @@
 ---
 name: goal-eval
-description: Evaluate progress toward a goal during iterative work. Use when you need to check whether current work should be accepted, continued, rolled back, or stopped. Invoke at any point during an iteration cycle to get a structured verdict.
+description: Evaluate progress toward a goal during iterative work. Use when you need to check whether current work should be accepted, continued, rolled back, or stopped. Invoke at any point during an iteration cycle to get a structured verdict with one of four decisions (accept, continue, rollback, stop). Helps autonomous agents avoid drift during long-horizon tasks.
+argument-hint: "[goal description]"
+metadata:
+  author: HenryLau7
+  version: "0.1.0"
 ---
 
 # Goal-to-Evaluator Compiler
