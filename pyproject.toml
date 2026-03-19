@@ -1,0 +1,24 @@
+[project]
+name = "goal-eval-compiler"
+version = "0.1.0"
+description = "Framework-agnostic system that compiles open-ended goals into structured evaluation contracts for autonomous agent workflows"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["core*", "adapters*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
